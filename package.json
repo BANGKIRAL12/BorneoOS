@@ -1,12 +1,12 @@
 {
   "name": "borneo-os",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
   "type": "module",
+  "main": "src/main/index.js", 
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
-    "lint": "eslint .",
+    "build": "vite build && electron-builder",
     "preview": "vite preview"
   },
   "dependencies": {
