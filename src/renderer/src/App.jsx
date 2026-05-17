@@ -3,10 +3,11 @@ import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
 import RightPanel from './components/RightPanel';
 import TerminalPanel from './components/TerminalPanel';
+import Dashboard from './features/dashboard/Dashboard';
+import Assistant from './features/assistant/Assistant';
 import useOSStore from './store/useOSStore';
 import { osConfig } from './config/osConfig';
 
-const Dashboard = () => <div className="p-6"><h1>Dashboard Home Workspace</h1><p className="text-gray-500 text-xs font-mono mt-1">Press shortcuts to control panels.</p></div>;
 const WhatsAppPage = () => <div className="p-6"><h1>WhatsApp Full Window View</h1></div>;
 const BorneoCode = () => <div className="p-6"><h1>Borneo Code Core IDE</h1></div>;
 
@@ -48,11 +49,24 @@ const App = () => {
       }
 
       // Alt Shortcuts untuk Panel Samping Kanan
-      if (matchShortcut(shortcuts.panelAI)) { e.preventDefault(); setRightPanelTab('ai'); }
-      if (matchShortcut(shortcuts.panelBrowser)) { e.preventDefault(); setRightPanelTab('browser'); }
-      if (matchShortcut(shortcuts.panelWhatsApp)) { e.preventDefault(); setRightPanelTab('whatsapp'); }
-      if (matchShortcut(shortcuts.panelCalc)) { e.preventDefault(); setRightPanelTab('calc'); }
-      if (matchShortcut(shortcuts.panelNotifications)) { e.preventDefault(); setRightPanelTab('notifications'); }
+      // Jalur Pintasan Keyboard Navigasi Panel Kanan BorneoOS
+      if (e.altKey && e.key.toLowerCase() === 'a') {
+        e.preventDefault();
+        useOSStore.getState().setRightPanelTab('ai');
+      }
+      if (e.altKey && e.key.toLowerCase() === 'c') {
+        e.preventDefault();
+        useOSStore.getState().setRightPanelTab('calc');
+      }
+      if (e.altKey && e.key.toLowerCase() === 'n') {
+        e.preventDefault();
+        useOSStore.getState().setRightPanelTab('notifications');
+      }
+      // ─── PENYUNTIKAN SHORTCUT KALENDER & WAKTU RESMI ───
+      if (e.altKey && e.key.toLowerCase() === 'd') {
+        e.preventDefault();
+        useOSStore.getState().setRightPanelTab('calc_time'); 
+      }
     };
 
     window.addEventListener('keydown', handleKeyDown);
@@ -62,6 +76,7 @@ const App = () => {
   const renderContent = () => {
     switch (activeTab) {
       case 'dashboard': return <Dashboard />;
+      case 'assistant': return <Assistant />;
       case 'whatsapp': return <WhatsAppPage />;
       case 'ide': return <BorneoCode />;
       default: return <Dashboard />;

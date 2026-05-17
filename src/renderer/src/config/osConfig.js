@@ -3,7 +3,6 @@ export const osConfig = {
     version: "0.1.0",
     codename: "BorneoOS Desktop"
   },
-  // Mapping Shortcut Key
   shortcuts: {
     toggleSidebar: { key: "b", ctrl: true, alt: false },
     toggleTerminal: { key: "`", ctrl: true, alt: false },
@@ -14,11 +13,15 @@ export const osConfig = {
     panelCalc: { key: "c", ctrl: false, alt: true },
     panelNotifications: { key: "n", ctrl: false, alt: true },
   },
-  // Pengaturan Nama Halaman & Icon Menu di Sidebar
   sidebarMenu: [
     { id: 'dashboard', label: 'Dashboard Center', icon: 'LayoutDashboard' },
+    { id: 'assistant', label: 'Borneo AI Copilot', icon: 'Bot' }, // <-- Tambah Baris Ini
     { id: 'whatsapp', label: 'WhatsApp Space', icon: 'MessageSquare' },
     { id: 'ide', label: 'Borneo Code Core', icon: 'Code2' },
     { id: 'finance', label: 'Finance Ledger', icon: 'Wallet' },
-  ]
+  ],
+  aiConfig: {
+    model: "qwen2.5-coder:1.5b", // <-- Ganti nama model di sini saat halaman setting di-edit nanti
+    systemPrompt: "You are BorneoAI, an integrated developer assistant inside BorneoOS. You must provide clean code blocks and format data as markdown tables when requested."
+  }
 };
