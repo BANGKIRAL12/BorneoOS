@@ -1,11 +1,7 @@
-// Potongan kode untuk ditambahkan ke dalam src/main/preload.js Anda:
-contextBridge.exposeInMainWorld('api', {
-  createTerminal: (id) => ipcRenderer.send('pty:create', id),
-  writeTerminal: (id, data) => ipcRenderer.send('pty:write', { id, data }),
-  closeTerminal: (id) => ipcRenderer.send('pty:close', id),
-  onTerminalData: (id, callback) => {
-    const listener = (event, data) => callback(data);
-    ipcRenderer.on(`pty:data-${id}`, listener);
-    return () => ipcRenderer.removeListener(`pty:data-${id}`, listener);
-  }
+import { contextBridge, ipcRenderer } from 'electron';
+
+contextBridge.exposeInMainWorld('terminalAPI', {
+  onData: (callback) => ipcRenderer.on('terminal-data', (_event, data) => callback(data)),
+  sendData: (data) => ipcRenderer.send('terminal-write', data),
+  resize: (cols, rows) => ipcRenderer.send('terminal-resize', { cols, rows })
 });
